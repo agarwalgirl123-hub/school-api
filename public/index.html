@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School API Portal - Secured</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🎓 Sunrise Public School API</h1>
+            <p>A secured interface to access our school's student directory programmatically.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Admin Settings: Nayi API Key banane ke liye -->
+        <section class="admin-settings">
+            <h2>⚙️ Admin Settings (Create API Key)</h2>
+            <p>Generate a new API key to give to your users. Only users with a valid API key can access the data.</p>
+            <button onclick="generateApiKey()" class="btn btn-secondary">Generate New API Key</button>
+            <div id="new-key-result" class="result-box hidden"></div>
+        </section>
+
+        <!-- Authentication Box: Yahan API Key dal kar verify karenge -->
+        <section class="auth-box">
+            <h2>🔒 API Authentication Box</h2>
+            <p>Please enter your API Key below to verify and unlock data access.</p>
+            <div class="try-it">
+                <input type="text" id="userApiKey" placeholder="Enter your API Key (e.g. sk_...)" style="width: 300px;">
+                <button onclick="verifyApiKey()" class="btn">Verify Key & Unlock</button>
+            </div>
+            <div id="auth-status" class="status-msg">Status: Not Verified ❌</div>
+        </section>
+
+        <!-- Main API Dashboard: Ye shuru me locked rahega -->
+        <div id="api-dashboard" class="locked">
+            <div class="overlay-lock">
+                <p>🔒 Verify your API Key above to unlock this dashboard</p>
+            </div>
+            
+            <section class="docs">
+                <h2>API Documentation</h2>
+                
+                <div class="endpoint">
+                    <span class="method">GET</span>
+                    <span class="url">/api/students</span>
+                    <p>Returns a list of all 100 students. Requires <code>x-api-key</code> header.</p>
+                    <button onclick="fetchAllStudents()" class="btn">Fetch All Students</button>
+                    <div id="all-students-result" class="result-box hidden" style="max-height: 250px; overflow-y: auto;"></div>
+                </div>
+                
+                <div class="endpoint">
+                    <span class="method">GET</span>
+                    <span class="url">/api/students/{id}</span>
+                    <p>Returns information for a specific student by their ID (1 to 100). Requires <code>x-api-key</code> header.</p>
+                    <div class="try-it">
+                        <input type="number" id="studentId" placeholder="Enter ID (1-100)" min="1" max="100">
+                        <button onclick="fetchStudent()" class="btn">Test API</button>
+                    </div>
+                    <div id="result" class="result-box hidden"></div>
+                </div>
+            </section>
+
+            <section class="directory">
+                <h2>Student Directory Preview</h2>
+                <p>Showing the first 10 students from our API:</p>
+                <div class="grid" id="student-grid">
+                    <!-- Students will be dynamically loaded here by script.js after verification -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Sunrise Public School API. Secured with Custom API Auth. 🔒</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
