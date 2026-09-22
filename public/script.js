@@ -144,3 +144,37 @@ function fetchStudent() {
         resultBox.classList.remove('hidden');
     });
 }
+
+// Naya search function (Name aur Age se dhundhne ke liye)
+function searchStudents() {
+    if (!isVerified) return alert("Pehle API key verify karein!");
+    
+    const name = document.getElementById('searchName').value;
+    const minAge = document.getElementById('searchMinAge').value;
+    const maxAge = document.getElementById('searchMaxAge').value;
+    const resultBox = document.getElementById('search-result');
+    
+    // Query parameters banana
+    let queryParams = [];
+    if (name) queryParams.push(`name=${encodeURIComponent(name)}`);
+    if (minAge) queryParams.push(`minAge=${minAge}`);
+    if (maxAge) queryParams.push(`maxAge=${maxAge}`);
+    
+    const queryString = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
+
+    fetch(`/api/students${queryString}`, {
+        headers: { 'x-api-key': currentApiKey }
+    })
+    .then(response => {
+        if(response.status === 401) throw new Error("Unauthorized");
+        return response.json();
+    })
+    .then(data => {
+        resultBox.textContent = `Total Found: ${data.length} student(s)\n\n` + JSON.stringify(data, null, 2);
+        resultBox.classList.remove('hidden');
+    })
+    .catch(error => {
+        resultBox.textContent = "Error searching data.";
+        resultBox.classList.remove('hidden');
+    });
+}

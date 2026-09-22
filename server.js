@@ -61,9 +61,24 @@ app.post('/api/verify-key', (req, res) => {
     }
 });
 
-// MAIN API: Sabhi students ko get karna (Sirf valid API Key wale hi use kar sakte hain)
+// MAIN API: Sabhi students ko get karna (Name aur Age search ke saath)
 app.get('/api/students', apiKeyAuth, (req, res) => {
-    res.json(students);
+    let result = students;
+
+    // Agar naam se search kiya hai
+    if (req.query.name) {
+        const searchName = req.query.name.toLowerCase();
+        result = result.filter(s => s.name.toLowerCase().includes(searchName));
+    }
+
+    // Agar age se search kiya hai (Jaise 18 se 20)
+    if (req.query.minAge || req.query.maxAge) {
+        const min = req.query.minAge ? parseInt(req.query.minAge) : 0;
+        const max = req.query.maxAge ? parseInt(req.query.maxAge) : 100;
+        result = result.filter(s => s.age >= min && s.age <= max);
+    }
+
+    res.json(result);
 });
 
 // MAIN API: Single student ko ID se get karna (Sirf valid API Key wale hi use kar sakte hain)

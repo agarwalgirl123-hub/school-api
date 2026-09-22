@@ -51,6 +51,18 @@
                     <button onclick="fetchAllStudents()" class="btn">Fetch All Students</button>
                     <div id="all-students-result" class="result-box hidden" style="max-height: 250px; overflow-y: auto;"></div>
                 </div>
+                <div class="endpoint">
+                    <span class="method">GET</span>
+                    <span class="url">/api/students/search</span>
+                    <p>Search students by Name or Age range (e.g. 15 to 17). Requires <code>x-api-key</code> header.</p>
+                    <div class="try-it">
+                        <input type="text" id="searchName" placeholder="Name (e.g. Rahul)" style="width: 150px;">
+                        <input type="number" id="searchMinAge" placeholder="Min Age (e.g. 15)" style="width: 120px;">
+                        <input type="number" id="searchMaxAge" placeholder="Max Age (e.g. 17)" style="width: 120px;">
+                        <button onclick="searchStudents()" class="btn">Search</button>
+                    </div>
+                    <div id="search-result" class="result-box hidden" style="max-height: 250px; overflow-y: auto;"></div>
+                </div>
                 
                 <div class="endpoint">
                     <span class="method">GET</span>
